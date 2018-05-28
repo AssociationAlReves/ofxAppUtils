@@ -109,6 +109,7 @@ class ofxScene :
 
 	public:
 	
+//        ofEasyCam sceneCam;
 		/// wrapper used to handle ofxScene magic behind the scenes ...
 		/// do not use directly!
 		class RunnerScene :

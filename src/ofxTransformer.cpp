@@ -156,16 +156,25 @@ void ofxTransformer::push(bool forceWarp) {
 	if(_bTransformsPushed) {
 		return; // don't push twice
 	}
-	ofPushMatrix();
+    if (!_bEditingWarpPoints){
+        cam.begin();
+        ofPushMatrix();
+        ofTranslate(-ofGetWidth() / 2, ofGetHeight() / 2);
+        ofScale(1, -1, 1);
+    } else {
+        ofPushMatrix();
+    }
 	if(_bScale) {
 		applyRenderScale();
 	}
 	if(_bTranslate) {
 		applyTranslate();
-	}
-	if(_bWarp || forceWarp) {
-		pushWarp();
-	}
+    }
+  
+    if(_bWarp || forceWarp) {
+        pushWarp();
+    }
+   
 	if(_bMirrorX) {
 		applyMirrorX();
 	}
@@ -177,19 +186,31 @@ void ofxTransformer::push(bool forceWarp) {
 
 //--------------------------------------------------------------
 void ofxTransformer::pop() {
-	if(_bWarp) {
+   
+    if(_bWarp) {
 		popWarp();
-	}
+    }
 	if(!_bTransformsPushed) {
 		return; // avoid extra pops
 	}
-	ofPopMatrix();
+    ofPopMatrix();
+    
+    if (!_bEditingWarpPoints){
+        cam.end();
+    }
 	_bTransformsPushed = false;
 }
 
 //--------------------------------------------------------------
 bool ofxTransformer::isPushed() {
 	return _bTransformsPushed;
+}
+
+void ofxTransformer::enableEasyCamMouseInput(){
+    cam.enableMouseInput();
+}
+void ofxTransformer::disableEasyCamMouseInput(){
+    cam.disableMouseInput();
 }
 
 //--------------------------------------------------------------
@@ -331,7 +352,13 @@ void ofxTransformer::saveWarpSettings(const string &xmlFile) {
 
 //--------------------------------------------------------------
 void ofxTransformer::setEditWarp(bool edit) {
+    if (edit){
+        cam.disableMouseInput();
+    } else {
+        cam.enableMouseInput();
+    }
 	_bEditingWarpPoints = edit;
+    
 }
 
 //--------------------------------------------------------------

@@ -16,6 +16,7 @@
 #include "ofxApp.h"
 #include "ofxScene.h"
 #include "ofxTimer.h"
+#include "ofMain.h"
 
 ///	\class	SceneManager
 ///	\brief	a map based scene manager

@@ -274,12 +274,12 @@ void ofxSceneManager::update() {
 
 // need to call ofxScene::RunnerScene::draw()
 void ofxSceneManager::draw() {
-	if(!_scenes.empty() && _currentScene >= 0) {
-		_currentRunnerScenePtr->draw();
-	}
-	if(_bOverlap && !_scenes.empty() && _newScene != SCENE_NOCHANGE && _newScene >= 0) {
-		_newRunnerScenePtr->draw();
-	}
+    if(!_scenes.empty() && _currentScene >= 0) {
+        _currentRunnerScenePtr->draw();
+    }
+    if(_bOverlap && !_scenes.empty() && _newScene != SCENE_NOCHANGE && _newScene >= 0) {
+        _newRunnerScenePtr->draw();
+    }
 }
 
 // call resize on all scenes
